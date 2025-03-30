@@ -1,0 +1,137 @@
+/* Ensure Navbar Doesn't Shake */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* General Styles for the Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #343a40;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Logo & Title Alignment */
+.navbar-brand {
+  display: flex;
+  align-items: center; /* Align logo and text */
+}
+
+.navbar-logo {
+  max-width: 35px; /* Adjust logo size */
+  height: auto;
+}
+
+.navbar-title {
+  color: white;
+  font-size: 1.5em;
+  margin-left: 10px; /* Space between logo and text */
+  font-weight: bold;
+}
+
+/* Navbar Links */
+.navbar-links {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  padding: 8px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  background-color: #007bff;
+  border-radius: 5px;
+}
+
+/* Adjust "Students Registered" Heading */
+.students-registered-h2 {
+  text-align: center;
+  margin-top: 100px; /* Add space below navbar */
+  margin-bottom: 50px;
+  font-size: 2em;
+}
+
+/* Main Container */
+.students-registered-container {
+  padding-top: 120px; /* Prevent content from being hidden behind navbar */
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Table Container */
+.students-table-container {
+  margin-top: 10px; /* Space from title */
+  display: flex;
+  justify-content: center; /* Center the table */
+  padding: 20px;
+}
+
+.students-registered-heading {
+  text-align: center;
+  margin-top: 50px; /* Space from navbar */
+  font-size: 2em;
+  color: #333;
+}
+/* Students Table */
+.students-table {
+  width: 100%;
+  margin-top: 60px;
+  border-collapse: collapse;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.students-table th, .students-table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.students-table th {
+  background-color: #0056b3; /* Darker header color */
+  color: black;
+}
+
+.students-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.students-table tr:hover {
+  background-color: #ddd;
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+  .navbar-title {
+    font-size: 1.2em; /* Smaller font size for smaller screens */
+  }
+
+  .navbar-logo {
+    width: 25px; /* Smaller logo for smaller screens */
+    height: 25px;
+  }
+
+  .navbar-links a {
+    font-size: 0.9em; /* Further reduced font size */
+  }
+
+  .students-table {
+    font-size: 0.9em;
+  }
+}

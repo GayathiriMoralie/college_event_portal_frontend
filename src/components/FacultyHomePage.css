@@ -1,0 +1,136 @@
+/* Faculty Home Page Content Styling */
+.faculty-home-container {
+  text-align: center;
+  padding: 20px;
+  margin-top: 80px; /* Added margin to avoid overlap with navbar */
+}
+
+.faculty-table-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.faculty-table {
+  border-collapse: collapse;
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.faculty-table th,
+.faculty-table td {
+  padding: 14px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.faculty-table th {
+  background-color: #007bff;
+  color: white;
+  font-size: 1.2em; /* Slightly larger text for headers */
+}
+
+.faculty-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.faculty-table tr:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+/* Remove buttons from Faculty Home Page */
+.faculty-view-events-link,
+.faculty-students-registered-link {
+  display: none; /* Hide these elements */
+}
+
+/* General Styles for the Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #343a40;
+  padding: 5px 15px; /* Reduced padding for smaller navbar */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar-logo {
+  max-width: 30px; /* Reduced logo size */
+  height: auto;
+}
+
+.navbar-title {
+  color: white;
+  font-size: 1.3em; /* Reduced font size */
+  margin-left: 10px; /* Space between logo and text */
+}
+
+.navbar-links {
+  display: flex;
+  gap: 12px; /* Reduced space between links */
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em; /* Reduced font size */
+  padding: 5px 10px; /* Smaller padding */
+  transition: background-color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  background-color: #007bff;
+  border-radius: 5px;
+}
+
+/* Logout Button */
+.navbar-logout {
+  padding: 8px 15px;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: auto; /* Aligns the logout button to the right */
+  margin-right: 50px;
+}
+
+.navbar-logout:hover {
+  background-color: #c82333; /* Slightly darker on hover */
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+  .faculty-table {
+    width: 100%;
+  }
+
+  .navbar-title {
+    font-size: 1.2em; /* Reduced font size for smaller screens */
+  }
+
+  .navbar-logo {
+    width: 25px; /* Smaller logo for smaller screens */
+    height: 25px;
+  }
+
+  .navbar-links a {
+    font-size: 0.9em; /* Further reduced font size */
+  }
+
+  .navbar-logout {
+    width: 100%; /* Make the logout button full-width on mobile */
+    padding: 10px 15px;
+   
+  }
+}

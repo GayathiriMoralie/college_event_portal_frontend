@@ -1,0 +1,185 @@
+/* Alternatively, add margin to the navbar's bottom */
+.navbar {
+  background-color: #004080;
+  color: white;
+  padding: 8px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 55px;
+  margin-bottom: 30px; /* Creates space below the navbar */
+}
+.navbar .logo {
+  font-size: 18px; /* Slightly smaller font */
+  font-weight: bold;
+}
+
+.navbar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navbar ul li {
+  margin-right: 10px; /* Reduced margin */
+}
+
+.navbar ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px; /* Smaller font */
+}
+
+.navbar ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Navbar Button */
+.navbar button {
+  padding: 5px 10px; /* Reduced padding */
+  font-size: 12px; /* Adjusted font size */
+  border-radius: 4px;
+  background: #007bff;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.navbar button:hover {
+  background: #0056b3;
+}
+br
+br
+
+.registration-form-container {
+  width: 50%;
+  margin: 50px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  color: white;
+  background: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.success-message {
+  color: green;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Add margin to create space between navbar and form */
+.registration-form-container {
+  width: 50%;
+  margin: 80px auto 30px; /* Increased top margin to 80px */
+  padding: 20px;
+  background: #f9f9f9;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.registration-form-container h2 {
+  text-align: center;
+  color: #333;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+input, select {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 8px;
+  background-color: #004080;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #002060;
+}
+
+/* Error Messages */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.message {
+  text-align: center;
+  font-size: 16px;
+  color: green;
+  margin-top: 10px;
+}

@@ -1,0 +1,120 @@
+/* LoginPage.css */
+
+/* Navbar Styling for Login Page */
+.navbar-login {
+  display: flex;
+  justify-content: flex-start; /* Align items to the left */
+  align-items: center;
+  background-color: #333;
+  padding: 10px 20px;
+  color: white;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000; /* Ensure navbar is on top of other content */
+}
+
+/* Logo for Login Page */
+.navbar-login .logo {
+  height: 40px;
+  width: 40px;
+}
+
+/* Title for Login Page */
+.navbar-login .title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 10px; /* Space between logo and title */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Prevent overflow */
+  text-overflow: ellipsis; /* Show ellipsis if text overflows */
+}
+br
+br
+
+/* Styling for the login container */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: url('/src/images/clg.jfif') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.login-form {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  z-index: 5;
+  margin-top: 100px;
+}
+
+.login-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.captcha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.refresh-btn {
+  background-color: #f0ad4e;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.refresh-btn:hover {
+  background-color: #ec971f;
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background-color: #218838;
+}

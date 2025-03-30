@@ -1,0 +1,44 @@
+/* App.css */
+
+/* Navbar Style */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px 20px;
+  color: white;
+}
+
+/* Left section (Logo + Text) */
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.college-logo {
+  height: 40px;  /* Adjust as needed */
+  margin-right: 10px;  /* Space between logo and text */
+}
+
+.navbar-text {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Navigation Links */
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.navbar-links a:hover {
+  color: #007bff;
+}
