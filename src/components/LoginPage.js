@@ -13,7 +13,7 @@ function LoginPage({ setUserRole }) {
   const navigate = useNavigate();
 
   // Backend API URL (Updated Render URL)
-  const BACKEND_URL = "https://college-event-portal-backend.onrender.com";
+  const BACKEND_URL = process.env.REACT_APP_API_URL || "https://college-event-portal-backend.onrender.com";
 
   // Generate random CAPTCHA
   const generateCaptcha = () => {
@@ -50,7 +50,7 @@ function LoginPage({ setUserRole }) {
     }
 
     try {
-      const response = await fetch(`${BACKEND_URL}/api/login`, {
+      const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role, id, password })
@@ -61,7 +61,7 @@ function LoginPage({ setUserRole }) {
       if (response.ok) {
         setUserRole(role);
         alert(`✅ Successfully logged in as a ${role.charAt(0).toUpperCase() + role.slice(1)}`);
-        navigate(role === 'student' ? '/StudentHomePage' : '/FacultyHomePage');
+        navigate(role === 'student' ? '/student-home' : '/faculty-home');
       } else {
         setError(data.message || 'Login failed. Please try again.');
       }
