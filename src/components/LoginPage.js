@@ -12,8 +12,7 @@ function LoginPage({ setUserRole }) {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Correct Backend API URL
-  const BACKEND_URL = "https://college-event-portal-backend.onrender.com";
+ 
 
   // Generate random CAPTCHA
   const generateCaptcha = () => {
@@ -50,11 +49,12 @@ function LoginPage({ setUserRole }) {
     }
 
     try {
-      const response = await fetch(`${BACKEND_URL}/api/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ role, id, password })
-      });
+      const response = await fetch("https://college-event-portal-backend.onrender.com/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+    });
+    
 
       const data = await response.json();
       
