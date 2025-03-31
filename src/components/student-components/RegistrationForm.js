@@ -4,32 +4,33 @@ import "./RegistrationForm.css";
 import ClgLogo from "../../images/clglogo.png";
 
 function RegistrationForm() {
-  const [Name, setName] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Event, setEvent] = useState("");
-  const [Contact_No, setContact_No] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [event, setEvent] = useState("");
+  const [contactNo, setContactNo] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const API_URL = process.env.REACT_APP_API_URL?.trim();
+  // ✅ API URL from environment variable
+  const API_URL = process.env.REACT_APP_API_URL?.trim() || "https://college-event-portal-backend.onrender.com";
 
   useEffect(() => {
-    console.log("🔗 API URL from .env:", API_URL); // Debugging
+    console.log("🔗 Using API URL:", API_URL);
   }, []);
 
   const validateForm = () => {
     let newErrors = {};
-    if (!Name.trim()) newErrors.Name = "Name is required";
-    if (!Email) {
-      newErrors.Email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(Email)) {
-      newErrors.Email = "Invalid email format";
+    if (!name.trim()) newErrors.name = "Name is required";
+    if (!email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Invalid email format";
     }
-    if (!Event) newErrors.Event = "Please select an event";
-    if (!Contact_No) {
-      newErrors.Contact_No = "Contact number is required";
-    } else if (!/^\d{10}$/.test(Contact_No)) {
-      newErrors.Contact_No = "Enter a valid 10-digit phone number";
+    if (!event.trim()) newErrors.event = "Please select an event";
+    if (!contactNo) {
+      newErrors.contactNo = "Contact number is required";
+    } else if (!/^\d{10}$/.test(contactNo)) {
+      newErrors.contactNo = "Enter a valid 10-digit phone number";
     }
 
     setErrors(newErrors);
@@ -40,12 +41,11 @@ function RegistrationForm() {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const formData = { name: Name, email: Email, event: Event, contact_no: Contact_No };
+    const formData = { name, email, event, contact_no: contactNo };
 
     try {
       console.log("🚀 Sending form data:", formData);
 
-    
       const response = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: {
@@ -53,17 +53,16 @@ function RegistrationForm() {
         },
         body: JSON.stringify(formData),
       });
-      
 
       const data = await response.json();
-      console.log("🔄 Response from server:", data);
+      console.log("🔄 Server Response:", data);
 
       if (response.ok) {
-        alert(`✅ Successfully registered for '${Event}'!`);
+        alert(`✅ Successfully registered for '${event}'!`);
         setName("");
         setEmail("");
         setEvent("");
-        setContact_No("");
+        setContactNo("");
         setErrors({});
       } else {
         alert(`❌ ${data.error || "Error submitting form. Try again!"}`);
@@ -98,32 +97,32 @@ function RegistrationForm() {
       <form onSubmit={handleFormSubmit}>
         <div className="form-group">
           <label>Name:</label>
-          <input type="text" value={Name} onChange={(e) => setName(e.target.value)} required />
-          {errors.Name && <p className="error-message">{errors.Name}</p>}
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+          {errors.name && <p className="error-message">{errors.name}</p>}
         </div>
 
         <div className="form-group">
           <label>Email:</label>
-          <input type="email" value={Email} onChange={(e) => setEmail(e.target.value)} required />
-          {errors.Email && <p className="error-message">{errors.Email}</p>}
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          {errors.email && <p className="error-message">{errors.email}</p>}
         </div>
 
         <div className="form-group">
           <label>Event:</label>
-          <select value={Event} onChange={(e) => setEvent(e.target.value)} required>
+          <select value={event} onChange={(e) => setEvent(e.target.value)} required>
             <option value="">Select Event</option>
             <option value="Cultural Event">Cultural Event</option>
             <option value="Symposium">Symposium</option>
             <option value="Technova">Technova</option>
             <option value="Pongal Celebration">Pongal Celebration</option>
           </select>
-          {errors.Event && <p className="error-message">{errors.Event}</p>}
+          {errors.event && <p className="error-message">{errors.event}</p>}
         </div>
 
         <div className="form-group">
           <label>Contact No:</label>
-          <input type="text" value={Contact_No} onChange={(e) => setContact_No(e.target.value)} required />
-          {errors.Contact_No && <p className="error-message">{errors.Contact_No}</p>}
+          <input type="text" value={contactNo} onChange={(e) => setContactNo(e.target.value)} required />
+          {errors.contactNo && <p className="error-message">{errors.contactNo}</p>}
         </div>
 
         <button type="submit">Submit</button>

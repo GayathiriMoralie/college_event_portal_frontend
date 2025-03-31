@@ -166,7 +166,6 @@
 
 
 
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -216,7 +215,7 @@ function FacultyEvents() {
       location: eventLocation
     })
     .then((response) => {
-      setEvents(events.map(event => event.id === editingEventId ? response.data : event));
+      setEvents(events.map(event => event._id === editingEventId ? response.data : event));
       resetForm();
       setIsEditing(false);
     })
@@ -228,7 +227,7 @@ function FacultyEvents() {
   const handleDeleteEvent = (id) => {
     axios.delete(`${BACKEND_URL}/events/${id}`)
       .then(() => {
-        setEvents(events.filter(event => event.id !== id));
+        setEvents(events.filter(event => event._id !== id));
       })
       .catch((error) => {
         console.error("There was an error deleting the event!", error);
@@ -241,7 +240,7 @@ function FacultyEvents() {
     setEventDate(event.date);
     setEventLocation(event.location);
     setIsEditing(true);
-    setEditingEventId(event.id);
+    setEditingEventId(event._id);
   };
 
   const handleSearch = (e) => {
@@ -253,6 +252,8 @@ function FacultyEvents() {
     setEventDescription('');
     setEventDate('');
     setEventLocation('');
+    setIsEditing(false);
+    setEditingEventId(null);
   };
 
   const filteredEvents = events.filter(event =>
@@ -310,12 +311,12 @@ function FacultyEvents() {
       {filteredEvents.length > 0 ? (
         <ul>
           {filteredEvents.map(event => (
-            <li key={event.id}>
+            <li key={event._id}>
               <h4>{event.name}</h4>
               <p>{event.description}</p>
               <p>{event.date} - {event.location}</p>
               <button onClick={() => handleEditEvent(event)}>Edit</button>
-              <button onClick={() => handleDeleteEvent(event.id)}>Delete</button>
+              <button onClick={() => handleDeleteEvent(event._id)}>Delete</button>
             </li>
           ))}
         </ul>

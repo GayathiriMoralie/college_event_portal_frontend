@@ -14,35 +14,20 @@ function AddEvent() {
     setEventData({ ...eventData, [name]: value });
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Send data to backend API
-  //   axios.post('http://localhost:8001/api/events', eventData)
-  //     .then(response => {
-  //       console.log("Event added successfully", response);
-  //     })
-  //     .catch(error => {
-  //       console.error("There was an error adding the event!", error);
-  //     });
-  // };
-
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    axios.post('https://college-event-portal-backend-779hpsv14.vercel.app/api/events', eventData, {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    .then(response => {
+    try {
+      const response = await axios.post('https://college-event-portal-backend.onrender.com/api/events', eventData, {
+        headers: { "Content-Type": "application/json" }
+      });
       console.log("🎉 Event added successfully!", response.data);
-    })
-    .catch(error => {
-      console.error("❌ There was an error adding the event!", error);
-    });
+      alert("Event added successfully!");
+      setEventData({ name: '', description: '', date: '', location: '' }); // Reset form
+    } catch (error) {
+      console.error("❌ Error adding event!", error.response?.data || error.message);
+      alert("Failed to add event. Please try again.");
+    }
   };
-  
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';  // Custom CSS for styling
 import clgLogo from '../images/clglogo.png';  // Import logo image
@@ -12,8 +12,8 @@ function LoginPage({ setUserRole }) {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // ✅ Correct backend URL
-  const BACKEND_URL = "https://college-event-portal-backend-a8dht5bme.vercel.app";
+  // Backend API URL (Updated Render URL)
+  const BACKEND_URL = "https://college-event-portal-backend.onrender.com";
 
   // Generate random CAPTCHA
   const generateCaptcha = () => {
@@ -22,31 +22,15 @@ function LoginPage({ setUserRole }) {
     setCaptchaInput('');
   };
 
-  // // ✅ Verify backend CORS headers
-  // useEffect(() => {
-  //   fetch(`${BACKEND_URL}/ping`, {
-  //     method: 'GET',
-  //     mode: 'cors',  // ✅ Ensure CORS is enabled
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //     .then((res) => {
-  //       if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
-  //       return res.json();
-  //     })
-  //     .then((data) => console.log("✅ Backend Response:", data.message))
-  //     .catch((err) => console.error("❌ Backend Wake-up Error:", err.message));
-  // }, []);
-
   // Generate CAPTCHA on page load
   useEffect(() => {
     generateCaptcha();
   }, []);
 
   // Handle login form submission
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError('');
 
     if (!role) {
       setError('Please select a role.');
@@ -60,33 +44,29 @@ function LoginPage({ setUserRole }) {
       setError('Password is required.');
       return;
     }
-    if (password !== '12345') {
-      setError('Invalid password.');
-      return;
-    }
     if (captcha !== parseInt(captchaInput)) {
       setError('Captcha does not match.');
       return;
     }
 
-    // Role-based ID validation
-    if (role === 'student' && id.toLowerCase() !== 'student') {
-      setError('Invalid Student ID. It should be "student".');
-      return;
-    }
-    if (role === 'faculty' && id.toLowerCase() !== 'faculty') {
-      setError('Invalid Faculty ID. It should be "faculty".');
-      return;
-    }
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role, id, password })
+      });
 
-    // Show success alert and redirect to the respective homepage
-    setUserRole(role);
-    if (role === 'student') {
-      alert('✅ Successfully logged in as a Student');
-      navigate('/StudentHomePage');
-    } else if (role === 'faculty') {
-      alert('✅ Successfully logged in as a Faculty');
-      navigate('/FacultyHomePage');
+      const data = await response.json();
+      
+      if (response.ok) {
+        setUserRole(role);
+        alert(`✅ Successfully logged in as a ${role.charAt(0).toUpperCase() + role.slice(1)}`);
+        navigate(role === 'student' ? '/StudentHomePage' : '/FacultyHomePage');
+      } else {
+        setError(data.message || 'Login failed. Please try again.');
+      }
+    } catch (err) {
+      setError('Error connecting to the server. Please try again later.');
     }
   };
 
@@ -144,7 +124,7 @@ function LoginPage({ setUserRole }) {
                 placeholder="Enter CAPTCHA"
               />
               <span onClick={generateCaptcha} className="refresh-btn" role="button">
-                &#x21bb; {/* Refresh symbol */}
+                &#x21bb;
               </span>
             </div>
 

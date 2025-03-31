@@ -116,27 +116,26 @@
 
 
 
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8001/api/events";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://college-event-portal-backend.onrender.com/api/events";
 
 function EventsList() {
   const [events, setEvents] = useState([]);
-  const [filteredEvents, setFilteredEvents] = useState([]); // To store filtered events
-  const [userRole] = useState(localStorage.getItem("userRole") || ""); // Fetch user role from localStorage
-  const [searchQuery, setSearchQuery] = useState(""); // For search query
-  const [loading, setLoading] = useState(true); // Loading state
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [userRole] = useState(localStorage.getItem("userRole") || "");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let isMounted = true; // To prevent memory leaks
+    let isMounted = true;
     axios
       .get(API_BASE_URL)
       .then((response) => {
         if (isMounted) {
           setEvents(response.data);
-          setFilteredEvents(response.data); // Initially show all events
+          setFilteredEvents(response.data);
           setLoading(false);
         }
       })
@@ -146,39 +145,36 @@ function EventsList() {
       });
 
     return () => {
-      isMounted = false; // Cleanup function to prevent memory leaks
+      isMounted = false;
     };
   }, []);
 
   useEffect(() => {
-    // Filter events based on search query
     setFilteredEvents(
-      events.filter(
-        (event) =>
-          (event.name?.toLowerCase().includes(searchQuery.toLowerCase()) || "") ||
-          (event.description?.toLowerCase().includes(searchQuery.toLowerCase()) || "")
+      events.filter((event) =>
+        [event.name, event.description]
+          .filter(Boolean)
+          .some((field) => field.toLowerCase().includes(searchQuery.toLowerCase()))
       )
     );
   }, [searchQuery, events]);
 
-  const handleDelete = (id) => {
-    if (userRole === "faculty") {
-      axios
-        .delete(`${API_BASE_URL}/${id}`)
-        .then(() => {
-          setEvents(events.filter((event) => event.id !== id && event._id !== id));
-        })
-        .catch((error) => {
-          console.error("Error deleting event:", error);
-        });
-    } else {
+  const handleDelete = async (id) => {
+    if (userRole !== "faculty") {
       alert("Only faculty can delete events");
+      return;
+    }
+
+    try {
+      await axios.delete(`${API_BASE_URL}/${id}`);
+      setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id && event._id !== id));
+    } catch (error) {
+      console.error("Error deleting event:", error);
     }
   };
 
   return (
     <div>
-      {/* Search Bar */}
       <div style={styles.searchContainer}>
         <input
           type="text"
@@ -202,7 +198,6 @@ function EventsList() {
             <p>
               {new Date(event.date).toLocaleString()} - {event.location}
             </p>
-            {/* Show delete option only for faculty */}
             {userRole === "faculty" && (
               <button onClick={() => handleDelete(event.id || event._id)} style={styles.deleteButton}>
                 Delete Event
@@ -215,7 +210,6 @@ function EventsList() {
   );
 }
 
-// Basic styling for the events and search bar
 const styles = {
   searchContainer: {
     marginBottom: "20px",
