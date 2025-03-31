@@ -13,13 +13,13 @@ function LoginPage({ setUserRole }) {
   const navigate = useNavigate();
 
   // Backend API URL
-  const BACKEND_URL = "https://college-event-portal-backend.onrender.com/api/auth/login";
+  const BACKEND_URL = "https://college-event-portal-backend.onrender.com/api/login";  // Ensure correct backend URL
 
   // Generate random CAPTCHA
   const generateCaptcha = () => {
     const randomNumber = Math.floor(1000 + Math.random() * 9000); // 4-digit number
     setCaptcha(randomNumber);
-    setCaptchaInput('');
+    setCaptchaInput('');  // Reset captcha input
   };
 
   // Generate CAPTCHA on page load
@@ -32,6 +32,7 @@ function LoginPage({ setUserRole }) {
     e.preventDefault();
     setError('');
 
+    // Validate form fields
     if (!role) {
       setError('Please select a role.');
       return;
@@ -49,11 +50,12 @@ function LoginPage({ setUserRole }) {
       return;
     }
 
+    // Send login request to backend API
     try {
       const response = await fetch(BACKEND_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ role, id, password })
+        body: JSON.stringify({ role, id, password }),  // Send role, id, and password
       });
 
       const data = await response.json();
@@ -63,7 +65,7 @@ function LoginPage({ setUserRole }) {
         alert(`✅ Successfully logged in as a ${role.charAt(0).toUpperCase() + role.slice(1)}`);
         navigate(role === 'student' ? '/StudentHomePage' : '/FacultyHomePage');
       } else {
-        setError(data.message || 'Login failed. Please try again.');
+        setError(data.error || 'Login failed. Please try again.');
       }
     } catch (err) {
       setError('Error connecting to the server. Please try again later.');
