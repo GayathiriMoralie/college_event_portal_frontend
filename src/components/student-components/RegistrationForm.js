@@ -45,11 +45,15 @@ function RegistrationForm() {
     try {
       console.log("🚀 Sending form data:", formData);
 
+    
       const response = await fetch(`${API_URL}/api/register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
+      
 
       const data = await response.json();
       console.log("🔄 Response from server:", data);
