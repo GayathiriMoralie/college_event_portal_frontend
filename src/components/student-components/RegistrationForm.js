@@ -11,17 +11,14 @@ function RegistrationForm() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  // Backend API URL from .env file
   const API_URL = process.env.REACT_APP_API_URL?.trim();
 
   useEffect(() => {
     console.log("🔗 API URL from .env:", API_URL); // Debugging
-  }, [API_URL]);
+  }, []);
 
-  // Validate form inputs
   const validateForm = () => {
     let newErrors = {};
-
     if (!Name.trim()) newErrors.Name = "Name is required";
     if (!Email) {
       newErrors.Email = "Email is required";
@@ -39,45 +36,36 @@ function RegistrationForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Submit form data
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
 
-    if (!validateForm()) return; // Stop if validation fails
-
-    const formData = {
-      name: Name, // Matching the backend field name
-      email: Email, // Matching the backend field name
-      event: Event, // Matching the backend field name
-      payment_method: "Onsite", // Hardcoded as "Onsite"
-      contact_no: Contact_No, // Matching the backend field name
-    };
+    const formData = { name: Name, email: Email, event: Event, contact_no: Contact_No };
 
     try {
-      console.log("🚀 Sending form data:", formData); // Debugging
+      console.log("🚀 Sending form data:", formData);
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/register`, {
+      const response = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       const data = await response.json();
+      console.log("🔄 Response from server:", data);
 
       if (response.ok) {
-        alert(`✅ Successfully registered for '${Event}'. All the best!`);
-
-        // Reset form fields after success
+        alert(`✅ Successfully registered for '${Event}'!`);
         setName("");
         setEmail("");
         setEvent("");
         setContact_No("");
         setErrors({});
       } else {
-        alert(`❌ ${data.error || "Error submitting form. Please try again."}`);
+        alert(`❌ ${data.error || "Error submitting form. Try again!"}`);
       }
     } catch (error) {
-      alert("❌ Error submitting form. Check network and try again.");
+      alert("❌ Network error! Please check your connection.");
       console.error("🛑 Form Submission Error:", error);
     }
   };
@@ -126,11 +114,6 @@ function RegistrationForm() {
             <option value="Pongal Celebration">Pongal Celebration</option>
           </select>
           {errors.Event && <p className="error-message">{errors.Event}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>Payment Method:</label>
-          <input type="text" value="Onsite" readOnly className="readonly-input" />
         </div>
 
         <div className="form-group">
