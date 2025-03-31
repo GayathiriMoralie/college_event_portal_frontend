@@ -12,8 +12,8 @@ function LoginPage({ setUserRole }) {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Backend API URL (Updated Render URL)
-  const BACKEND_URL = process.env.REACT_APP_API_URL || "https://college-event-portal-backend.onrender.com";
+  // Correct Backend API URL
+  const BACKEND_URL = "https://college-event-portal-backend.onrender.com";
 
   // Generate random CAPTCHA
   const generateCaptcha = () => {
