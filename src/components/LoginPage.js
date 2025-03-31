@@ -46,11 +46,13 @@ function LoginPage({ setUserRole }) {
       return;
     }
 
+    const requestBody = role === 'student' ? { studentId: id, password } : { facultyId: id, password };
+
     try {
       const response = await fetch("https://college-event-portal-backend.onrender.com/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, password, role }),
+        body: JSON.stringify(requestBody),
       });
 
       const data = await response.json();
