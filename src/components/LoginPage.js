@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import clgImage from "../images/clg.jfif";
 
-const LoginPage = () => {
+const LoginPage = ({ setUserRole }) => {
     const [role, setRole] = useState("Student");
     const [id, setId] = useState("");
     const [password, setPassword] = useState("");
@@ -49,7 +49,14 @@ const LoginPage = () => {
             if (response.ok && data.success) {
                 setMessage("✅ Login successful!");
 
+                // Store the role in localStorage
+                localStorage.setItem('userRole', role.toLowerCase());  // Store role in lowercase
+
+                // Update the userRole state in App.js
+                setUserRole(role.toLowerCase());
+
                 setTimeout(() => {
+                    // Redirect based on role
                     if (role === "Student") {
                         navigate("/StudentHomePage");
                     } else if (role === "Faculty") {
