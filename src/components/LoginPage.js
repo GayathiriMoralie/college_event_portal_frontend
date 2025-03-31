@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import clgImage from "../images/clg.jfif";
 
@@ -9,6 +10,7 @@ const LoginPage = () => {
     const [captcha, setCaptcha] = useState(generateCaptcha());
     const [userInput, setUserInput] = useState("");
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();  // React Router navigation
 
     const BACKEND_URL = "https://college-event-portal-backend.onrender.com/api/login";
 
@@ -18,10 +20,12 @@ const LoginPage = () => {
 
     const refreshCaptcha = () => {
         setCaptcha(generateCaptcha());
+        setUserInput("");  // Clear input when refreshing
     };
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setMessage(""); // Clear previous messages
 
         if (userInput !== captcha) {
             setMessage("❌ Incorrect Captcha");
@@ -34,7 +38,7 @@ const LoginPage = () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 
-                    role: role.toLowerCase(),  // Ensure role matches backend expectations
+                    role: role,  // Keep casing as it is
                     id: id.trim(),
                     password: password.trim()
                 }),
@@ -44,8 +48,15 @@ const LoginPage = () => {
 
             if (response.ok && data.success) {
                 setMessage("✅ Login successful!");
+
                 setTimeout(() => {
-                    window.location.href = role === "student" ? "/student-home" : "/faculty-home";
+                    if (role === "Student") {
+                        navigate("/StudentHomePage");
+                    } else if (role === "Faculty") {
+                        navigate("/FacultyHomePage");
+                    } else {
+                        setMessage("❌ Invalid role detected!");
+                    }
                 }, 1000);
             } else {
                 setMessage(data.error || "❌ Invalid credentials");
@@ -65,15 +76,35 @@ const LoginPage = () => {
                         <option value="Student">Student</option>
                         <option value="Faculty">Faculty</option>
                     </select>
+
                     <label>{role === "Student" ? "Student ID:" : "Faculty Staff ID:"}</label>
-                    <input type="text" value={id} onChange={(e) => setId(e.target.value)} required />
+                    <input 
+                        type="text" 
+                        value={id} 
+                        onChange={(e) => setId(e.target.value)} 
+                        required 
+                    />
+
                     <label>Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <input 
+                        type="password" 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)} 
+                        required 
+                    />
+
                     <label>Captcha: {captcha}</label>
-                    <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} required />
+                    <input 
+                        type="text" 
+                        value={userInput} 
+                        onChange={(e) => setUserInput(e.target.value)} 
+                        required 
+                    />
+
                     <button type="button" onClick={refreshCaptcha}>Refresh Captcha</button>
                     <button type="submit">Login</button>
                 </form>
+
                 {message && <p className="message">{message}</p>}
             </div>
         </div>
