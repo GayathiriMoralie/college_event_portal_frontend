@@ -12,8 +12,6 @@ function LoginPage({ setUserRole }) {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
- 
-
   // Generate random CAPTCHA
   const generateCaptcha = () => {
     const randomNumber = Math.floor(1000 + Math.random() * 9000); // 4-digit number
@@ -49,12 +47,11 @@ function LoginPage({ setUserRole }) {
     }
 
     try {
-      const response = await fetch("https://college-event-portal-backend.onrender.com/api/login", {
+      const response = await fetch("https://college-event-portal-backend.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-    });
-    
+        body: JSON.stringify({ id, password, role }),
+      });
 
       const data = await response.json();
       
