@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';  // Custom CSS for styling
 import clgLogo from '../images/clglogo.png';  // Import logo image
@@ -10,10 +10,17 @@ function LoginPage({ setUserRole }) {
   const [captcha, setCaptcha] = useState('');
   const [captchaInput, setCaptchaInput] = useState('');
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
+  // Static user data (no DB)
+  const users = {
+    student: { id: 'student', password: '12345' },
+    faculty: { id: 'faculty', password: '12345' },
+  };
+
   // Backend API URL
-  const BACKEND_URL = "https://college-event-portal-backend.onrender.com/api/login";  // Ensure correct backend URL
+  const BACKEND_URL = 'https://college-event-portal-backend.onrender.com'; // Update this with your backend URL
 
   // Generate random CAPTCHA
   const generateCaptcha = () => {
@@ -31,6 +38,7 @@ function LoginPage({ setUserRole }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+    setMessage('');
 
     // Validate form fields
     if (!role) {
@@ -38,7 +46,7 @@ function LoginPage({ setUserRole }) {
       return;
     }
     if (!id.trim()) {
-      setError(role === 'student' ? 'Student ID is required.' : 'Faculty ID is required.');
+      setError('ID is required.');
       return;
     }
     if (!password.trim()) {
@@ -49,26 +57,24 @@ function LoginPage({ setUserRole }) {
       setError('Captcha does not match.');
       return;
     }
-
     // Send login request to backend API
     try {
       const response = await fetch(BACKEND_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ role, id, password }),  // Send role, id, and password
+        body: JSON.stringify({ id, password, role }),  // Send email, password, and role
       });
 
       const data = await response.json();
-      
-      if (response.ok) {
-        setUserRole(role);
-        alert(`✅ Successfully logged in as a ${role.charAt(0).toUpperCase() + role.slice(1)}`);
-        navigate(role === 'student' ? '/StudentHomePage' : '/FacultyHomePage');
-      } else {
-        setError(data.error || 'Login failed. Please try again.');
-      }
-    } catch (err) {
-      setError('Error connecting to the server. Please try again later.');
+    // Check if the user exists (use static users)
+    if (users[role] && users[role].id === id && users[role].password === password) {
+      setUserRole(role);
+      setMessage('You have been logged out, kindly log in for further details.');
+      setTimeout(() => {
+        navigate(role === 'student' ? '/StudentHomePage' : '/FacultyHomePage'); // Redirect based on role
+      }, 2000);
+    } else {
+      setError('Invalid credentials.');
     }
   };
 
@@ -95,13 +101,13 @@ function LoginPage({ setUserRole }) {
             </div>
 
             <div className="form-group">
-              <label>{role === 'student' ? 'Student ID' : 'Faculty ID'}</label>
+              <label>ID</label>
               <input
                 type="text"
                 value={id}
                 onChange={(e) => setId(e.target.value)}
                 required
-                placeholder={role === 'student' ? 'Enter Student ID' : 'Enter Faculty ID'}
+                placeholder="Enter your ID"
               />
             </div>
 
@@ -131,6 +137,7 @@ function LoginPage({ setUserRole }) {
             </div>
 
             {error && <p className="error">{error}</p>}
+            {message && <p className="message">{message}</p>}
 
             <button type="submit" className="login-btn">Login</button>
           </form>
