@@ -12,6 +12,9 @@ function LoginPage({ setUserRole }) {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // ✅ Correct backend URL
+  const BACKEND_URL = "https://college-event-portal-backend-a8dht5bme.vercel.app";
+
   // Generate random CAPTCHA
   const generateCaptcha = () => {
     const randomNumber = Math.floor(1000 + Math.random() * 9000); // 4-digit number
@@ -19,16 +22,24 @@ function LoginPage({ setUserRole }) {
     setCaptchaInput('');
   };
 
-  
-useEffect(() => {
-  fetch("https://college-event-portal-backend.vercel.app/ping")
-    .then((res) => res.json())
-    .then((data) => console.log(data.message))
-    .catch((err) => console.error("❌ Backend Wake-up Error:", err));
-}, []);
+  // ✅ Verify backend CORS headers
+  useEffect(() => {
+    fetch(`${BACKEND_URL}/ping`, {
+      method: 'GET',
+      mode: 'cors',  // ✅ Ensure CORS is enabled
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+        return res.json();
+      })
+      .then((data) => console.log("✅ Backend Response:", data.message))
+      .catch((err) => console.error("❌ Backend Wake-up Error:", err.message));
+  }, []);
 
-
-  //Generate CAPTCHA on page load
+  // Generate CAPTCHA on page load
   useEffect(() => {
     generateCaptcha();
   }, []);
@@ -71,10 +82,10 @@ useEffect(() => {
     // Show success alert and redirect to the respective homepage
     setUserRole(role);
     if (role === 'student') {
-      alert('Successfully logged in as a Student');
+      alert('✅ Successfully logged in as a Student');
       navigate('/StudentHomePage');
     } else if (role === 'faculty') {
-      alert('Successfully logged in as a Faculty');
+      alert('✅ Successfully logged in as a Faculty');
       navigate('/FacultyHomePage');
     }
   };
@@ -108,7 +119,7 @@ useEffect(() => {
                 value={id}
                 onChange={(e) => setId(e.target.value)}
                 required
-                placeholder={role === 'student' ? 'Enter Student ID ' : 'Enter Faculty ID'}
+                placeholder={role === 'student' ? 'Enter Student ID' : 'Enter Faculty ID'}
               />
             </div>
 
