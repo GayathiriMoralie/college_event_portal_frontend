@@ -11,7 +11,6 @@ function RegistrationForm() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  // ✅ API URL from environment variable
   const API_URL = process.env.REACT_APP_API_URL?.trim() || "https://college-event-portal-backend.onrender.com";
 
   useEffect(() => {
@@ -41,11 +40,17 @@ function RegistrationForm() {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const formData = { name, email, event, contact_no: contactNo };
+    const formData = {
+      name,
+      email,
+      event,
+      contact_no: contactNo,
+      payment_method: "Onsite", // Change as needed
+    };
+
+    console.log("🚀 Sending form data:", formData);
 
     try {
-      console.log("🚀 Sending form data:", formData);
-
       const response = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: {
