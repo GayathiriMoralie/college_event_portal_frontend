@@ -19,7 +19,16 @@ function LoginPage({ setUserRole }) {
     setCaptchaInput('');
   };
 
-  // Generate CAPTCHA on page load
+  
+useEffect(() => {
+  fetch("https://college-event-portal-backend.vercel.app/ping")
+    .then((res) => res.json())
+    .then((data) => console.log(data.message))
+    .catch((err) => console.error("❌ Backend Wake-up Error:", err));
+}, []);
+
+
+  //Generate CAPTCHA on page load
   useEffect(() => {
     generateCaptcha();
   }, []);

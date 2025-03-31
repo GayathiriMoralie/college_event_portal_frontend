@@ -9,6 +9,29 @@ function AddEventForm() {
   const [eventFees, setEventFees] = useState('');
   const [message, setMessage] = useState('');
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+    
+  //   // Collect data from the form
+  //   const eventData = {
+  //     name,
+  //     description,
+  //     date,
+  //     location,
+  //     event_fees: eventFees,
+  //     created_by: 'Faculty Name'  // This can be dynamically set depending on the logged-in faculty
+  //   };
+
+  //   try {
+  //     const response = await axios.post('http://localhost:5000/api/events', eventData, {
+  //       headers: { 'Content-Type': 'application/json' },
+  //     });
+  //     setMessage('Event created successfully!');
+  //   } catch (error) {
+  //     setMessage('Error creating event: ' + error.response.data.error);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -19,19 +42,29 @@ function AddEventForm() {
       date,
       location,
       event_fees: eventFees,
-      created_by: 'Faculty Name'  // This can be dynamically set depending on the logged-in faculty
+      created_by: 'Faculty Name'  // This should be dynamically set based on login
     };
-
+  
     try {
-      const response = await axios.post('http://localhost:5000/api/events', eventData, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-      setMessage('Event created successfully!');
+      const response = await axios.post(
+        'https://college-event-portal-backend-779hpsv14.vercel.app/api/events', 
+        eventData,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+      
+      setMessage('🎉 Event created successfully!');
+      console.log("✅ Event Created:", response.data);
     } catch (error) {
-      setMessage('Error creating event: ' + error.response.data.error);
+      console.error("❌ Error creating event:", error);
+      
+      // Check if response exists to prevent app crash
+      const errorMessage = error.response?.data?.error || "Unknown error occurred!";
+      setMessage(`❌ Error creating event: ${errorMessage}`);
     }
   };
-
+  
   return (
     <div className="add-event-form">
       <h2>Add New Event</h2>

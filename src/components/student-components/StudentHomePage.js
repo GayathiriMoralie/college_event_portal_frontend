@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './StudentHomePage.scss';
+import './StudentHomePage.css';
 import Event1 from '../../images/event1.jpeg';
 import Event2 from '../../images/event2.jpeg';
 import Event3 from '../../images/event3.jfif';

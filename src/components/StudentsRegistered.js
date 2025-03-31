@@ -9,13 +9,12 @@ const StudentsRegistered = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch registered students from backend
   useEffect(() => {
-    fetch("http://localhost:8001/api/register")
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/register`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched Data:", data); // Debugging
-        setStudents(data);
+        setStudents(data);  // Ensure data contains `id`
         setLoading(false);
       })
       .catch((error) => {
@@ -58,38 +57,33 @@ const StudentsRegistered = () => {
         <p className="error-message">{error}</p>
       ) : (
         <div className="students-table-container">
-          <table className="students-table">
-            <thead>
-              <tr>
-                <th>S.No</th>
-                <th>Name of Student</th>
-                <th>Email</th>
-                <th>Registered Event</th>
-                <th>Payment Method</th>
-                <th>Contact No</th>
-                <th>Registration Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.length > 0 ? (
-                students.map((student, index) => (
-                  <tr key={student.id}>
-                    <td>{index + 1}</td>
-                    <td>{student.Name}</td>
-                    <td>{student.Email}</td>
-                    <td>{student.Event}</td>
-                    <td>{student.Payment_Method}</td>
-                    <td>{student.Contact_No}</td>
-                    <td>{new Date(student.created_at).toLocaleDateString()}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="7" className="no-data">No students registered yet.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+         <table>
+  <thead>
+    <tr>
+      <th>S.No</th>
+      <th>Name of Student</th>
+      <th>Email</th>
+      <th>Registered Event</th>
+      <th>Payment Method</th>
+      <th>Contact No</th>
+      <th>Registration Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {students.map((student, index) => (
+      <tr key={index}>
+        <td>{student.s_no}</td>
+        <td>{student.name}</td>
+        <td>{student.email}</td>
+        <td>{student.event}</td>
+        <td>{student.payment_method}</td>
+        <td>{student.contact_no}</td>
+        <td>{new Date(student.created_at).toLocaleDateString()}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
         </div>
       )}
     </div>

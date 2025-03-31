@@ -1,30 +1,37 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './RegistrationForm.css';
-import ClgLogo from '../../images/clglogo.png';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./RegistrationForm.css";
+import ClgLogo from "../../images/clglogo.png";
 
 function RegistrationForm() {
-  const [Name, setName] = useState('');
-  const [Email, setEmail] = useState('');
-  const [Event, setEvent] = useState('');
-  const [Contact_No, setContact_No] = useState('');
+  const [Name, setName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Event, setEvent] = useState("");
+  const [Contact_No, setContact_No] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  // Backend API URL from .env file
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8001";
+
+  useEffect(() => {
+    console.log("API URL:", API_URL); // Debugging API URL
+  }, [API_URL]);
 
   const validateForm = () => {
     let newErrors = {};
 
-    if (!Name.trim()) newErrors.Name = 'Name is required';
+    if (!Name.trim()) newErrors.Name = "Name is required";
     if (!Email) {
-      newErrors.Email = 'Email is required';
+      newErrors.Email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(Email)) {
-      newErrors.Email = 'Invalid email format';
+      newErrors.Email = "Invalid email format";
     }
-    if (!Event) newErrors.Event = 'Please select an event';
+    if (!Event) newErrors.Event = "Please select an event";
     if (!Contact_No) {
-      newErrors.Contact_No = 'Contact number is required';
+      newErrors.Contact_No = "Contact number is required";
     } else if (!/^\d{10}$/.test(Contact_No)) {
-      newErrors.Contact_No = 'Enter a valid 10-digit phone number';
+      newErrors.Contact_No = "Enter a valid 10-digit phone number";
     }
 
     setErrors(newErrors);
@@ -33,37 +40,44 @@ function RegistrationForm() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!validateForm()) return;
-
-    const formData = { 
-      Name, 
-      Email, 
-      Event, 
-      Payment_Method: "Onsite", 
-      Contact_No 
+  
+    const formData = {
+      Name,
+      Email,
+      Event,
+      Payment_Method: "Onsite",
+      Contact_No,
     };
-
+  
     try {
-      const response = await fetch("http://localhost:8001/api/register", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
-      const data = await response.json();
-
+  
+      const data = await response.json(); // Wait for JSON response
+  
       if (response.ok) {
         alert(`You have successfully registered for '${Event}' competition. All the best!`);
-        setName(""); setEmail(""); setEvent(""); setContact_No(""); 
+  
+        // Reset form fields after successful submission
+        setName("");
+        setEmail("");
+        setEvent(""); // Reset dropdown correctly
+        setContact_No("");
         setErrors({});
       } else {
         alert(data.error || "Error submitting form. Please try again.");
       }
     } catch (error) {
       alert("Error submitting form. Please check your network and try again.");
+      console.error("Form Submission Error:", error);
     }
   };
+  
 
   return (
     <div className="registration-form-container">
@@ -73,9 +87,15 @@ function RegistrationForm() {
           <span className="navbar-title">College Event Portal</span>
         </div>
         <div className="navbar-links">
-          <button onClick={() => navigate('/StudentEvents')} className="navbar-link">Student Events</button>
-          <button onClick={() => navigate('/RegistrationForm')} className="navbar-link">Registration Form</button>
-          <button onClick={() => navigate('/logout')} className="navbar-logout">Logout</button>
+          <button onClick={() => navigate("/StudentEvents")} className="navbar-link">
+            Student Events
+          </button>
+          <button onClick={() => navigate("/RegistrationForm")} className="navbar-link">
+            Registration Form
+          </button>
+          <button onClick={() => navigate("/logout")} className="navbar-logout">
+            Logout
+          </button>
         </div>
       </nav>
 

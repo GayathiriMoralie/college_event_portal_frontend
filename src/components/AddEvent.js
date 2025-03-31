@@ -14,17 +14,35 @@ function AddEvent() {
     setEventData({ ...eventData, [name]: value });
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Send data to backend API
+  //   axios.post('http://localhost:8001/api/events', eventData)
+  //     .then(response => {
+  //       console.log("Event added successfully", response);
+  //     })
+  //     .catch(error => {
+  //       console.error("There was an error adding the event!", error);
+  //     });
+  // };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Send data to backend API
-    axios.post('http://localhost:8001/api/events', eventData)
-      .then(response => {
-        console.log("Event added successfully", response);
-      })
-      .catch(error => {
-        console.error("There was an error adding the event!", error);
-      });
+  
+    axios.post('https://college-event-portal-backend-779hpsv14.vercel.app/api/events', eventData, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => {
+      console.log("🎉 Event added successfully!", response.data);
+    })
+    .catch(error => {
+      console.error("❌ There was an error adding the event!", error);
+    });
   };
+  
 
   return (
     <div>
