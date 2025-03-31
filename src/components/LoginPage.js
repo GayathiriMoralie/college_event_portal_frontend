@@ -22,22 +22,22 @@ function LoginPage({ setUserRole }) {
     setCaptchaInput('');
   };
 
-  // ✅ Verify backend CORS headers
-  useEffect(() => {
-    fetch(`${BACKEND_URL}/ping`, {
-      method: 'GET',
-      mode: 'cors',  // ✅ Ensure CORS is enabled
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
-        return res.json();
-      })
-      .then((data) => console.log("✅ Backend Response:", data.message))
-      .catch((err) => console.error("❌ Backend Wake-up Error:", err.message));
-  }, []);
+  // // ✅ Verify backend CORS headers
+  // useEffect(() => {
+  //   fetch(`${BACKEND_URL}/ping`, {
+  //     method: 'GET',
+  //     mode: 'cors',  // ✅ Ensure CORS is enabled
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+  //       return res.json();
+  //     })
+  //     .then((data) => console.log("✅ Backend Response:", data.message))
+  //     .catch((err) => console.error("❌ Backend Wake-up Error:", err.message));
+  // }, []);
 
   // Generate CAPTCHA on page load
   useEffect(() => {

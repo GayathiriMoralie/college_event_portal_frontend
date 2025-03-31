@@ -12,13 +12,13 @@ function RegistrationForm() {
   const navigate = useNavigate();
 
   // Backend API URL from .env file
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8001"; // Default fallback
+  const API_URL = process.env.REACT_APP_API_URL?.trim();
 
   useEffect(() => {
-    console.log("API URL from .env:", API_URL); // Debugging
-  }, [API_URL]); // Added dependency to ensure .env is loaded
+    console.log("🔗 API URL from .env:", API_URL); // Debugging
+  }, [API_URL]);
 
-  // Form validation function
+  // Validate form inputs
   const validateForm = () => {
     let newErrors = {};
 
@@ -39,7 +39,7 @@ function RegistrationForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Form submission handler
+  // Submit form data
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -54,31 +54,31 @@ function RegistrationForm() {
     };
 
     try {
-      const response = await fetch(`https://college-event-portal-backend-a8dht5bme.vercel.app/api/register`, {
+      console.log("🚀 Sending form data:", formData); // Debugging
+
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // Allow cookies if needed
-        mode: "cors", // Ensures cross-origin requests work
         body: JSON.stringify(formData),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert(`You have successfully registered for '${Event}' competition. All the best!`);
+        alert(`✅ Successfully registered for '${Event}'. All the best!`);
 
-        // Reset form fields after successful submission
+        // Reset form fields after success
         setName("");
         setEmail("");
-        setEvent(""); // Reset dropdown properly
+        setEvent("");
         setContact_No("");
         setErrors({});
       } else {
-        alert(data.error || "Error submitting form. Please try again.");
+        alert(`❌ ${data.error || "Error submitting form. Please try again."}`);
       }
     } catch (error) {
-      alert("Error submitting form. Please check your network and try again.");
-      console.error("Form Submission Error:", error);
+      alert("❌ Error submitting form. Check network and try again.");
+      console.error("🛑 Form Submission Error:", error);
     }
   };
 
