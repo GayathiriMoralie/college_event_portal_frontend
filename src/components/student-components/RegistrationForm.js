@@ -46,11 +46,11 @@ function RegistrationForm() {
     if (!validateForm()) return; // Stop if validation fails
 
     const formData = {
-      Name,
-      Email,
-      Event,
-      Payment_Method: "Onsite", // Hardcoded as "Onsite"
-      Contact_No,
+      name: Name, // Matching the backend field name
+      email: Email, // Matching the backend field name
+      event: Event, // Matching the backend field name
+      payment_method: "Onsite", // Hardcoded as "Onsite"
+      contact_no: Contact_No, // Matching the backend field name
     };
 
     try {

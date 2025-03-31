@@ -19,25 +19,8 @@ function LoginPage({ setUserRole }) {
   const generateCaptcha = () => {
     const randomNumber = Math.floor(1000 + Math.random() * 9000); // 4-digit number
     setCaptcha(randomNumber);
-    setCaptchaInput('');
+    setCaptchaInput(''); // Clear captcha input on refresh
   };
-
-  // // ✅ Verify backend CORS headers
-  // useEffect(() => {
-  //   fetch(`${BACKEND_URL}/ping`, {
-  //     method: 'GET',
-  //     mode: 'cors',  // ✅ Ensure CORS is enabled
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //     .then((res) => {
-  //       if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
-  //       return res.json();
-  //     })
-  //     .then((data) => console.log("✅ Backend Response:", data.message))
-  //     .catch((err) => console.error("❌ Backend Wake-up Error:", err.message));
-  // }, []);
 
   // Generate CAPTCHA on page load
   useEffect(() => {
@@ -45,7 +28,7 @@ function LoginPage({ setUserRole }) {
   }, []);
 
   // Handle login form submission
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!role) {
@@ -79,14 +62,33 @@ function LoginPage({ setUserRole }) {
       return;
     }
 
-    // Show success alert and redirect to the respective homepage
-    setUserRole(role);
-    if (role === 'student') {
-      alert('✅ Successfully logged in as a Student');
-      navigate('/StudentHomePage');
-    } else if (role === 'faculty') {
-      alert('✅ Successfully logged in as a Faculty');
-      navigate('/FacultyHomePage');
+    // Submit login credentials to backend
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ role, id, password }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        setUserRole(role);  // Set user role on successful login
+        if (role === 'student') {
+          alert('✅ Successfully logged in as a Student');
+          navigate('/StudentHomePage');  // Redirect to student home page
+        } else if (role === 'faculty') {
+          alert('✅ Successfully logged in as a Faculty');
+          navigate('/FacultyHomePage');  // Redirect to faculty home page
+        }
+      } else {
+        setError(data.message || 'Invalid credentials. Please try again.');
+      }
+    } catch (error) {
+      console.error('❌ Login Error:', error);
+      setError('Error connecting to the backend. Please try again later.');
     }
   };
 
