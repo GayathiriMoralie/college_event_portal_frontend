@@ -12,6 +12,9 @@ function LoginPage({ setUserRole }) {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Backend API URL
+  const BACKEND_URL = "https://college-event-portal-backend.onrender.com/api/auth/login";
+
   // Generate random CAPTCHA
   const generateCaptcha = () => {
     const randomNumber = Math.floor(1000 + Math.random() * 9000); // 4-digit number
@@ -46,13 +49,11 @@ function LoginPage({ setUserRole }) {
       return;
     }
 
-    const requestBody = role === 'student' ? { studentId: id, password } : { facultyId: id, password };
-
     try {
-      const response = await fetch("https://college-event-portal-backend.onrender.com/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
+      const response = await fetch(BACKEND_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role, id, password })
       });
 
       const data = await response.json();
@@ -60,7 +61,7 @@ function LoginPage({ setUserRole }) {
       if (response.ok) {
         setUserRole(role);
         alert(`✅ Successfully logged in as a ${role.charAt(0).toUpperCase() + role.slice(1)}`);
-        navigate(role === 'student' ? '/student-home' : '/faculty-home');
+        navigate(role === 'student' ? '/StudentHomePage' : '/FacultyHomePage');
       } else {
         setError(data.message || 'Login failed. Please try again.');
       }
