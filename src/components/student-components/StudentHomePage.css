@@ -184,3 +184,103 @@
 .close-button:hover {
   color: red;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 15px;
+  }
+
+  .navbar-title {
+    font-size: 18px;
+  }
+
+  .navbar-links {
+    display: none;
+  }
+
+  .navbar-logout {
+    padding: 5px 8px;
+    font-size: 14px;
+  }
+
+  .content {
+    margin-top: 70px;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
+  .welcome-text {
+    font-size: 16px;
+  }
+
+  .event-slider {
+    width: 95%;
+  }
+
+  .event-card {
+    flex: 0 0 100%;
+  }
+
+  .event-title {
+    font-size: 16px;
+  }
+
+  .event-image {
+    width: 100%;
+  }
+
+  /* Fullscreen Image */
+  .fullscreen-overlay {
+    display: flex;
+  }
+
+  .fullscreen-image {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  /* Modal */
+  .modal-content {
+    max-width: 90%;
+    max-height: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-logo {
+    height: 30px;
+    margin-right: 5px;
+  }
+
+  .navbar-title {
+    font-size: 16px;
+  }
+
+  .navbar-logout {
+    padding: 4px 7px;
+    font-size: 12px;
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .welcome-text {
+    font-size: 14px;
+  }
+
+  .event-card {
+    flex: 0 0 100%;
+  }
+
+  .event-title {
+    font-size: 14px;
+  }
+
+  .event-image {
+    width: 100%;
+  }
+}
