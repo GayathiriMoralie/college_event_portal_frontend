@@ -97,7 +97,7 @@
 }
 
 .event-card {
-  flex: 0 0 50%; /* Default for larger screens */
+  flex: 0 0 50%;
   text-align: center;
   cursor: pointer;
   position: relative;
@@ -232,12 +232,12 @@
   }
 
   .event-slider {
-    width: 95%;
+    width: 100%;
   }
 
   .event-card {
-    flex: 0 0 100%; /* Stack event cards vertically */
-    margin-bottom: 10px; /* Space between event cards */
+    flex: 0 0 100%; /* 100% width for mobile view */
+    margin-bottom: 20px; /* Add space between cards */
   }
 
   .event-title {
@@ -289,7 +289,7 @@
   }
 
   .event-card {
-    flex: 0 0 100%; /* Stack event cards vertically */
+    flex: 0 0 100%; /* 100% width for smaller mobile screens */
   }
 
   .event-title {
