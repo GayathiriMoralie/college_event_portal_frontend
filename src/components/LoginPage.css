@@ -1,7 +1,9 @@
-/* Navbar Styling */
+/* LoginPage.css */
+
+/* Navbar Styling for Login Page */
 .navbar-login {
   display: flex;
-  justify-content: flex-end; /* Align items to the right */
+  justify-content: space-between; /* Space between logo and title */
   align-items: center;
   background-color: #333;
   padding: 10px 20px;
@@ -12,13 +14,13 @@
   z-index: 1000; /* Ensure navbar is on top of other content */
 }
 
-/* Logo for Navbar */
+/* Logo for Login Page */
 .navbar-login .logo {
   height: 40px;
   width: 40px;
 }
 
-/* Title for Navbar */
+/* Title for Login Page */
 .navbar-login .title {
   font-size: 24px;
   font-weight: bold;
@@ -34,40 +36,45 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* Background styling and positioning */
 .login-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
+  align-items: center;
+  min-height: 100vh;
   background: url('../images/clg.jfif') no-repeat center center fixed;
   background-size: cover;
-  padding-top: 80px; /* Adjust for navbar height */
+  padding-top: 60px; /* Space for the navbar */
 }
 
+/* Styling the login box */
 .login-box {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.8); /* Slight transparent white background */
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 300px;
-  margin-top: 50px;
+  width: 90%;
+  max-width: 400px; /* Max width to avoid stretching too much on wide screens */
+  z-index: 5;
+  text-align: center;
 }
 
 .login-box h2 {
-  text-align: center;
   margin-bottom: 20px;
-  color: #333;
+  font-size: 24px;
+  font-weight: bold;
 }
 
+/* Form group styling */
 .form-group {
   margin-bottom: 15px;
+  text-align: left;
 }
 
 .form-group label {
   font-size: 14px;
-  font-weight: bold;
-  color: #333;
+  margin-bottom: 5px;
 }
 
 .form-group input,
@@ -80,18 +87,18 @@ body {
   font-size: 14px;
 }
 
-.form-group input:focus,
-.form-group select:focus {
-  border-color: #0056b3;
-  outline: none;
-}
-
+/* Captcha styling */
 .captcha {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+.captcha input {
+  width: 60%;
+}
+
+/* Refresh button for captcha */
 .refresh-btn {
   background-color: #f0ad4e;
   color: white;
@@ -100,58 +107,88 @@ body {
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.2rem;
+  margin-left: 10px;
 }
 
 .refresh-btn:hover {
   background-color: #ec971f;
 }
 
+/* Error message styling */
 .error {
   color: red;
   text-align: center;
+  margin-top: 10px;
 }
 
+/* Login button */
 .login-btn {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background-color: #28a745;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .login-btn:hover {
   background-color: #218838;
 }
 
-.message {
-  text-align: center;
-  margin-top: 15px;
-  font-weight: bold;
-}
-
-@media (max-width: 768px) {
-  /* For mobile responsiveness */
+/* Responsive Design - Mobile View */
+@media (max-width: 600px) {
   .login-box {
-    width: 90%;
+    width: 80%;
     padding: 20px;
   }
 
-  .login-container {
-    background-size: cover;
-    background-position: center;
+  .form-group input,
+  .form-group select {
+    font-size: 16px;
+  }
+
+  .login-btn {
+    font-size: 14px;
+  }
+
+  .refresh-btn {
+    font-size: 1rem;
   }
 }
 
-@media (max-width: 480px) {
-  /* For smaller mobile screens */
+/* Additional Styling for the Login Form on Larger Screens */
+@media (min-width: 601px) {
   .login-box {
-    width: 100%;
-    padding: 15px;
+    width: 350px;
   }
 
-  .login-container {
-    background-position: top center;
+  .form-group input,
+  .form-group select {
+    font-size: 15px;
   }
+
+  .login-btn {
+    font-size: 15px;
+  }
+
+  .refresh-btn {
+    font-size: 1.1rem;
+  }
+}
+
+/* Message styling (Success/Failure) */
+.message {
+  font-size: 14px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.message.success {
+  color: green;
+}
+
+.message.error {
+  color: red;
 }
