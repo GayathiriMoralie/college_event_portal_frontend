@@ -1,9 +1,7 @@
-/* LoginPage.css */
-
-/* Navbar Styling for Login Page */
+/* Navbar Styling */
 .navbar-login {
   display: flex;
-  justify-content: flex-start; /* Align items to the left */
+  justify-content: flex-end; /* Align items to the right */
   align-items: center;
   background-color: #333;
   padding: 10px 20px;
@@ -14,13 +12,13 @@
   z-index: 1000; /* Ensure navbar is on top of other content */
 }
 
-/* Logo for Login Page */
+/* Logo for Navbar */
 .navbar-login .logo {
   height: 40px;
   width: 40px;
 }
 
-/* Title for Login Page */
+/* Title for Navbar */
 .navbar-login .title {
   font-size: 24px;
   font-weight: bold;
@@ -29,8 +27,6 @@
   overflow: hidden; /* Prevent overflow */
   text-overflow: ellipsis; /* Show ellipsis if text overflows */
 }
-br
-br
 
 /* Styling for the login container */
 body {
@@ -44,23 +40,24 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: url('/src/images/clg.jfif') no-repeat center center fixed;
+  background: url('../images/clg.jfif') no-repeat center center fixed;
   background-size: cover;
+  padding-top: 80px; /* Adjust for navbar height */
 }
 
-.login-form {
-  background-color: rgba(255, 255, 255, 0.8);
+.login-box {
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 300px;
-  z-index: 5;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
-.login-form h2 {
+.login-box h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #333;
 }
 
 .form-group {
@@ -69,6 +66,8 @@ body {
 
 .form-group label {
   font-size: 14px;
+  font-weight: bold;
+  color: #333;
 }
 
 .form-group input,
@@ -78,6 +77,13 @@ body {
   margin-top: 5px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #0056b3;
+  outline: none;
 }
 
 .captcha {
@@ -117,4 +123,35 @@ body {
 
 .login-btn:hover {
   background-color: #218838;
+}
+
+.message {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  /* For mobile responsiveness */
+  .login-box {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .login-container {
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+@media (max-width: 480px) {
+  /* For smaller mobile screens */
+  .login-box {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .login-container {
+    background-position: top center;
+  }
 }
