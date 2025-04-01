@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import clgImage from "../images/clg.jfif";
+import clgLogo from "../images/clglogo.png";  // Assuming your logo is in the images folder
 
 const LoginPage = ({ setUserRole }) => {
     const [role, setRole] = useState("Student");
@@ -10,7 +11,7 @@ const LoginPage = ({ setUserRole }) => {
     const [captcha, setCaptcha] = useState(generateCaptcha());
     const [userInput, setUserInput] = useState("");
     const [message, setMessage] = useState("");
-    const navigate = useNavigate();  // React Router navigation
+    const navigate = useNavigate();
 
     const BACKEND_URL = "https://college-event-portal-backend.onrender.com/api/login";
 
@@ -38,7 +39,7 @@ const LoginPage = ({ setUserRole }) => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 
-                    role: role,  // Keep casing as it is
+                    role: role,
                     id: id.trim(),
                     password: password.trim()
                 }),
@@ -50,7 +51,7 @@ const LoginPage = ({ setUserRole }) => {
                 setMessage("✅ Login successful!");
 
                 // Store the role in localStorage
-                localStorage.setItem('userRole', role.toLowerCase());  // Store role in lowercase
+                localStorage.setItem('userRole', role.toLowerCase()); 
 
                 // Update the userRole state in App.js
                 setUserRole(role.toLowerCase());
@@ -75,6 +76,13 @@ const LoginPage = ({ setUserRole }) => {
 
     return (
         <div className="login-container" style={{ backgroundImage: `url(${clgImage})` }}>
+            {/* Navbar */}
+            <div className="navbar-login">
+                <img src={clgLogo} alt="Logo" className="logo" />
+                <h1 className="title">College Event Portal</h1>
+            </div>
+
+            {/* Login Box */}
             <div className="login-box">
                 <h2>College Event Portal Login</h2>
                 <form onSubmit={handleLogin}>
