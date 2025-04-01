@@ -97,7 +97,7 @@
 }
 
 .event-card {
-  flex: 0 0 50%;
+  flex: 0 0 50%; /* Default for larger screens */
   text-align: center;
   cursor: pointer;
   position: relative;
@@ -236,7 +236,8 @@
   }
 
   .event-card {
-    flex: 0 0 100%;
+    flex: 0 0 100%; /* Stack event cards vertically */
+    margin-bottom: 10px; /* Space between event cards */
   }
 
   .event-title {
@@ -288,7 +289,7 @@
   }
 
   .event-card {
-    flex: 0 0 100%;
+    flex: 0 0 100%; /* Stack event cards vertically */
   }
 
   .event-title {
