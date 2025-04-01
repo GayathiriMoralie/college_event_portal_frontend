@@ -1,9 +1,13 @@
+/* Basic styling */
 .student-home-container {
   width: 100%;
   font-family: Arial, sans-serif;
   text-align: center;
+  padding: 0;
+  margin: 0;
 }
 
+/* Navbar Styling */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -31,6 +35,7 @@
 .navbar-title {
   font-size: 20px;
   font-weight: bold;
+  text-align: left;
 }
 
 .navbar-links {
@@ -53,8 +58,17 @@
   border-radius: 5px;
 }
 
+/* Hover effect for navbar links */
+.navbar-link:hover,
+.navbar-logout:hover {
+  background-color: #34495e;
+  transition: background-color 0.3s;
+}
+
+/* Ensuring content is not hidden behind navbar */
 .content {
   margin-top: 80px;
+  padding: 20px;
 }
 
 .page-title {
@@ -105,10 +119,11 @@
 }
 
 .event-image {
-  width: 90%;
+  width: 100%;
   height: auto;
   border-radius: 10px;
   display: block;
+  object-fit: cover;
 }
 
 /* Fullscreen Image View */
