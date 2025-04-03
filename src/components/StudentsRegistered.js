@@ -10,7 +10,7 @@ const StudentsRegistered = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/register`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/register`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched Data:", data); // Debugging
